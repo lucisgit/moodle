@@ -1012,6 +1012,13 @@ abstract class restore_dbops {
         foreach ($rs as $recuser) {
             $user = (object)self::get_backup_ids_record($restoreid, 'user', $recuser->itemid)->info;
 
+            // Convert all NULL fields to empty.
+            foreach ((array)$user as $key => $value) {
+                if ($value === NULL) {
+                    $user->$key = '';
+                }
+            }
+
             // if user lang doesn't exist here, use site default
             if (!array_key_exists($user->lang, $languages)) {
                 $user->lang = $CFG->lang;
