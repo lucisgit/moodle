@@ -3601,5 +3601,18 @@ privatefiles,moodle|/user/files.php';
         upgrade_main_savepoint(true, 2023091300.03);
     }
 
+    if ($oldversion < 2023100300.00) {
+
+        // Changing type of field value on table user_preferences to text.
+        $table = new xmldb_table('user_preferences');
+        $field = new xmldb_field('value', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null, 'name');
+
+        // Launch change of type for field value.
+        $dbman->change_field_type($table, $field);
+
+        // Main savepoint reached.
+        upgrade_main_savepoint(true, 2023100300.00);
+    }
+
     return true;
 }
