@@ -63,6 +63,7 @@ class markerallocation_test extends \advanced_testcase {
             'blindmarking'                      => 0,
             'attemptreopenmethod'               => 'none',
             'maxattempts'                       => -1,
+            'preventlateresubmissions'          => 0,
             'markingworkflow'                   => 1,
             'markingallocation'                 => 1,
         );

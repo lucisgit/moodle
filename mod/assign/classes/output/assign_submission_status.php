@@ -90,6 +90,8 @@ class assign_submission_status implements \renderable {
     public $attemptreopenmethod = 'none';
     /** @var int maxattempts */
     public $maxattempts = -1;
+    /** @var bool preventlateresubmissions */
+    public $preventlateresubmissions = false;
     /** @var string gradingstatus */
     public $gradingstatus = '';
     /** @var bool preventsubmissionnotingroup */
@@ -129,6 +131,7 @@ class assign_submission_status implements \renderable {
      * @param string $gradingcontrollerpreview
      * @param string $attemptreopenmethod The method of reopening student attempts.
      * @param int $maxattempts How many attempts can a student make?
+     * @param bool $preventlateresubmissions - Prevent submission changes after due date
      * @param string $gradingstatus The submission status (ie. Graded, Not Released etc).
      * @param bool $preventsubmissionnotingroup Prevent submission if user is not in a group.
      * @param array $usergroups Array containing all groups the user is assigned to.
@@ -162,6 +165,7 @@ class assign_submission_status implements \renderable {
         $gradingcontrollerpreview,
         $attemptreopenmethod,
         $maxattempts,
+        $preventlateresubmissions,
         $gradingstatus,
         $preventsubmissionnotingroup,
         $usergroups,
@@ -194,6 +198,7 @@ class assign_submission_status implements \renderable {
         $this->gradingcontrollerpreview = $gradingcontrollerpreview;
         $this->attemptreopenmethod = $attemptreopenmethod;
         $this->maxattempts = $maxattempts;
+        $this->preventlateresubmissions = $preventlateresubmissions;
         $this->gradingstatus = $gradingstatus;
         $this->preventsubmissionnotingroup = $preventsubmissionnotingroup;
         $this->usergroups = $usergroups;

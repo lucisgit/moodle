@@ -130,5 +130,21 @@ function xmldb_assign_upgrade($oldversion) {
         // Assignment savepoint reached.
         upgrade_mod_savepoint(true, 2022071300, 'assign');
     }
+
+    if ($oldversion < 2022090600) {
+        // Add a 'preventlateresubmissions' field to the 'assign' table.
+        $table = new xmldb_table('assign');
+        $field = new xmldb_field('preventlateresubmissions', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, 0,
+                'preventsubmissionnotingroup');
+
+        // Conditionally launch add field.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Assign savepoint reached.
+        upgrade_mod_savepoint(true, 2022090600, 'assign');
+    }
+
     return true;
 }
