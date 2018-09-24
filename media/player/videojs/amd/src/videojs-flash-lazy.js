@@ -1,7 +1,7 @@
 /**
  * videojs-flash
- * @version 2.0.0
- * @copyright 2017 Brightcove, Inc.
+ * @version 2.1.2
+ * @copyright 2018 Brightcove, Inc.
  * @license Apache-2.0
  */
 (function (global, factory) {
@@ -10,11 +10,11 @@
 	(global.videojsFlash = factory(global.videojs));
 }(this, (function (videojs) { 'use strict';
 
-videojs = 'default' in videojs ? videojs['default'] : videojs;
+videojs = videojs && videojs.hasOwnProperty('default') ? videojs['default'] : videojs;
 
-var version = "5.4.1";
+var version = "5.4.2";
 
-var version$1 = "2.0.0";
+var version$1 = "2.1.2";
 
 /**
  * @file flash-rtmp.js
@@ -88,7 +88,7 @@ function FlashRtmpDecorator(Flash) {
     // Look for the normal URL separator we expect, '&'.
     // If found, we split the URL into two pieces around the
     // first '&'.
-    var connEnd = src.search(/&(?!\w+=)/);
+    var connEnd = src.search(/&(?![\w-]+=)/);
     var streamBegin = void 0;
 
     if (connEnd !== -1) {
@@ -377,7 +377,7 @@ var Flash = function (_Tech) {
     // Otherwise this adds a CDN url.
     // The CDN also auto-adds a swf URL for that specific version.
     if (!options.swf) {
-      options.swf = '//vjs.zencdn.net/swf/' + version + '/video-js.swf';
+      options.swf = 'https://vjs.zencdn.net/swf/' + version + '/video-js.swf';
     }
 
     // Generate ID for swf object
@@ -1121,12 +1121,16 @@ for (var _i = 0; _i < _readOnly.length; _i++) {
  * Check if the Flash tech is currently supported.
  *
  * @return {boolean}
- *          - True if the flash tech is supported.
- *          - False otherwise.
+ *          - True for Chrome and Safari Desktop and if flash tech is supported
+ *          - False otherwise
  */
 Flash.isSupported = function () {
+  // for Chrome Desktop and Safari Desktop
+  if (videojs.browser.IS_CHROME && !videojs.browser.IS_ANDROID || videojs.browser.IS_SAFARI && !videojs.browser.IS_IOS) {
+    return true;
+  }
+  // for other browsers
   return Flash.version()[0] >= 10;
-  // return swfobject.hasFlashPlayerVersion('10');
 };
 
 // Add Source Handler pattern functions to this tech
@@ -1329,7 +1333,12 @@ Flash.onError = function (swfID, err) {
   }
 
   // trigger a custom error
-  tech.error('FLASH: ' + err);
+  if (typeof err === 'string') {
+    tech.error('FLASH: ' + err);
+  } else {
+    err.origin = 'flash';
+    tech.error(err);
+  }
 };
 
 /**
