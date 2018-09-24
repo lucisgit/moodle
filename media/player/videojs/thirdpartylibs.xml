@@ -32,7 +32,7 @@
         <location>videojs/video-js.swf</location>
         <name>Custom Flash Player for VideoJS</name>
         <license>Apache</license>
-        <version>5.4.1</version>
+        <version>5.4.2</version>
         <licenseversion>2.0</licenseversion>
     </library>
 </libraries>
