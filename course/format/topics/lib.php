@@ -242,6 +242,7 @@ class format_topics extends core_courseformat\base {
      * Topics format uses the following options:
      * - coursedisplay
      * - hiddensections
+     * - expandedsections
      *
      * @param bool $foreditform
      * @return array of options
@@ -257,6 +258,10 @@ class format_topics extends core_courseformat\base {
                 ],
                 'coursedisplay' => [
                     'default' => $courseconfig->coursedisplay,
+                    'type' => PARAM_INT,
+                ],
+                'expandedsections' => [
+                    'default' => $courseconfig->expandedsections,
                     'type' => PARAM_INT,
                 ],
             ];
@@ -286,6 +291,16 @@ class format_topics extends core_courseformat\base {
                     ],
                     'help' => 'coursedisplay',
                     'help_component' => 'moodle',
+                ],
+                'expandedsections' => [
+                    'label' => new lang_string('expandedsections'),
+                    'element_type' => 'select',
+                    'element_attributes' => [
+                        [
+                            1 => new lang_string('expandedsectionsexpanded'),
+                            0 => new lang_string('expandedsectionscollapsed')
+                        ],
+                    ],
                 ],
             ];
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
@@ -328,7 +343,8 @@ class format_topics extends core_courseformat\base {
      * Updates format options for a course.
      *
      * In case if course format was changed to 'topics', we try to copy options
-     * 'coursedisplay' and 'hiddensections' from the previous format.
+     * 'coursedisplay', 'hiddensections' and 'expandedsections' from the
+     * previous format.
      *
      * @param stdClass|array $data return value from {@link moodleform::get_data()} or array with data
      * @param stdClass $oldcourse if this function is called from {@link update_course()}

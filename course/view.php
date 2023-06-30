@@ -308,6 +308,27 @@ $modnamesused = $modinfo->get_used_module_names();
 $mods = $modinfo->get_cms();
 $sections = $modinfo->get_section_info_all();
 
+// Collapse all sections, provided the user is brand new to the course and the format settings specify this
+// behaviour.
+$sectionpreferences = $format->get_sections_preferences_by_preference();
+
+// If contentcollapsed field is already present, then no need to do anything as user has already specified
+// what they want expanded/collapsed.
+if (!isset($sectionpreferences['contentcollapsed'])) {
+    $courseformatoptions = $format->get_format_options();
+    if (isset($courseformatoptions['expandedsections']) && $courseformatoptions['expandedsections'] == 0) {
+        $collapsedids = [];
+        foreach ($sections as $sectioninfo) {
+            // If the section is the general section, or has been marked as current, we leave it expanded.
+            if ($sectioninfo->section == 0 || $format->is_section_current($sectioninfo)) {
+                continue;
+            }
+            $collapsedids[] = (int) $sectioninfo->id;
+        }
+        $format->set_sections_preference('contentcollapsed', $collapsedids);
+    }
+}
+
 // CAUTION, hacky fundamental variable defintion to follow!
 // Note that because of the way course fromats are constructed though
 // inclusion we pass parameters around this way.

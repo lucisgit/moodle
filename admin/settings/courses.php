@@ -136,6 +136,12 @@ if ($hassiteconfig or has_any_capability($capabilities, $systemcontext)) {
     $temp->add(new admin_setting_configduration('moodlecourse/courseduration', get_string('courseduration'),
         get_string('courseduration_desc'), YEARSECS));
 
+    $choices = array();
+    $choices['1'] = new lang_string('expandedsectionsexpanded');
+    $choices['0'] = new lang_string('expandedsectionscollapsed');
+    $temp->add(new admin_setting_configselect('moodlecourse/expandedsections', new lang_string('expandedsections'),
+        new lang_string('coursehelpexpandedsections'), 1, $choices));
+
     // Appearance.
     $temp->add(new admin_setting_heading('appearancehdr', new lang_string('appearance'), ''));
 

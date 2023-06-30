@@ -781,6 +781,7 @@ class externallib_test extends externallib_advanced_testcase {
                 $this->assertEquals($course['courseformatoptions'], array(
                     array('name' => 'hiddensections', 'value' => $dbcourse->hiddensections),
                     array('name' => 'coursedisplay', 'value' => $dbcourse->coursedisplay),
+                    array('name' => 'expandedsections', 'value' => $dbcourse->expandedsections)
                 ));
             }
 
@@ -2732,7 +2733,7 @@ class externallib_test extends externallib_advanced_testcase {
         // Expect to receive all the fields.
         $this->assertCount(41, $result['courses'][0]);
         // Check default values for course format topics.
-        $this->assertCount(3, $result['courses'][0]['courseformatoptions']);
+        $this->assertCount(4, $result['courses'][0]['courseformatoptions']);
         foreach ($result['courses'][0]['courseformatoptions'] as $option) {
             switch ($option['name']) {
                 case 'hiddensections':

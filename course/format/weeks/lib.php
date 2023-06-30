@@ -253,6 +253,7 @@ class format_weeks extends core_courseformat\base {
      * Weeks format uses the following options:
      * - coursedisplay
      * - hiddensections
+     * - expandedsections
      * - automaticenddate
      *
      * @param bool $foreditform
@@ -269,6 +270,10 @@ class format_weeks extends core_courseformat\base {
                 ),
                 'coursedisplay' => array(
                     'default' => $courseconfig->coursedisplay ?? COURSE_DISPLAY_SINGLEPAGE,
+                    'type' => PARAM_INT,
+                ),
+                'expandedsections' => array(
+                    'default' => $courseconfig->expandedsections,
                     'type' => PARAM_INT,
                 ),
                 'automaticenddate' => array(
@@ -302,6 +307,16 @@ class format_weeks extends core_courseformat\base {
                     ),
                     'help' => 'coursedisplay',
                     'help_component' => 'moodle',
+                ),
+                'expandedsections' => array(
+                    'label' => new lang_string('expandedsections'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('expandedsectionsexpanded'),
+                            0 => new lang_string('expandedsectionscollapsed')
+                        )
+                    ),
                 ),
                 'automaticenddate' => array(
                     'label' => new lang_string('automaticenddate', 'format_weeks'),
@@ -359,7 +374,7 @@ class format_weeks extends core_courseformat\base {
      * Updates format options for a course
      *
      * In case if course format was changed to 'weeks', we try to copy options
-     * 'coursedisplay', 'numsections' and 'hiddensections' from the previous format.
+     * 'coursedisplay', 'numsections', 'hiddensections' and 'expandedsections' from the previous format.
      * If previous course format did not have 'numsections' option, we populate it with the
      * current number of sections
      *
