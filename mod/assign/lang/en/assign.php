@@ -245,6 +245,7 @@ $string['groupsubmissionsettings'] = 'Group submission settings';
 $string['errornosubmissions'] = 'There are no submissions to download';
 $string['errorquickgradingvsadvancedgrading'] = 'The grades were not saved because this assignment is currently using advanced grading';
 $string['errorrecordmodified'] = 'The grades were not saved because someone has modified one or more records more recently than when you loaded the page.';
+$string['errorgradechangessaveddetail'] = 'The changes to the grade and feedback failed to save';
 $string['feedback'] = 'Feedback';
 $string['feedbackavailabletext'] = '{$a->username} has posted some feedback on your
 assignment submission for \'{$a->assignment}\'
