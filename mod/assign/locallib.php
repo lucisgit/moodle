@@ -6143,7 +6143,6 @@ class assign {
                         $DB->update_record ('assign_submission', $membersubmission);
                     }
                 }
-
                 $result = $DB->update_record('assign_submission', $submission);
             }
         } else {
