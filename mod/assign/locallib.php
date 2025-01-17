@@ -6134,17 +6134,15 @@ class assign {
                     $submission->status = ASSIGN_SUBMISSION_STATUS_DRAFT;
                 }
 
-                // MDL-65527-main ->  Start
-                // Update Group assigment submission for members so it can be filtered by status to show all members
-                if( count($team) > 1 && $anysubmitted){
+                // Update group assigment submission for members so it can be filtered by status to show all members.
+                if (count($team) > 1 && $anysubmitted) {
                     foreach ($team as $member) {
-                        $groupmembersubmission = $this->get_user_submission($member->id, false, $submission->attemptnumber);
-                        $groupmembersubmission->status = $submission->status;
-                        $groupmembersubmission->timemodified = $submission->timemodified;
-                        $result = $DB->update_record('assign_submission', $groupmembersubmission);
+                        $membersubmission = $this->get_user_submission($member->id, false, $submission->attemptnumber);
+                        $membersubmission->status = $submission->status;
+                        $membersubmission->timemodified = $submission->timemodified;
+                        $DB->update_record ('assign_submission', $membersubmission);
                     }
                 }
-                // MDL-65527-main ->  End
 
                 $result = $DB->update_record('assign_submission', $submission);
             }
