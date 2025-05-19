@@ -8701,7 +8701,11 @@ class assign {
                 break;
             case ASSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS:
                 // Check the gradetopass from the gradebook.
-                $gradeitem = $this->get_grade_item();
+                try {
+                    $gradeitem = $this->get_grade_item();
+                } catch (coding_exception) {
+                    return false;
+                }
                 if ($gradeitem) {
                     $gradegrade = grade_grade::fetch(['userid' => $userid, 'itemid' => $gradeitem->id]);
 
